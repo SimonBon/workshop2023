@@ -47,7 +47,10 @@ def extract_and_pad_objects(mask, image, patch_sz, exclude_edges=True, use_surro
             continue
 
         mask_patch = np.pad(mask[y_min:y_max, x_min:x_max], ((pad_t, pad_b), (pad_l, pad_r)), mode='constant', constant_values=0)
-        image_patch = np.pad(image[y_min:y_max, x_min:x_max], ((pad_t, pad_b), (pad_l, pad_r), (0,0)), mode='constant', constant_values=0)
+        if image.ndim == 3:
+            image_patch = np.pad(image[y_min:y_max, x_min:x_max], ((pad_t, pad_b), (pad_l, pad_r), (0,0)), mode='constant', constant_values=0)
+        if image.ndim == 2:
+            image_patch = np.pad(image[y_min:y_max, x_min:x_max], ((pad_t, pad_b), (pad_l, pad_r)), mode='constant', constant_values=0)
         
         assert mask_patch.shape == (patch_sz, patch_sz), f"Shape should be {patch_sz} x {patch_sz} but is {mask_patch.shape[0]} x {mask_patch.shape[1]}"
         
