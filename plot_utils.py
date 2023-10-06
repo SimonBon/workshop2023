@@ -10,12 +10,15 @@ def rand_col_seg(seg) -> np.ndarray:
     return colors[seg]
 
 
-def gridPlot(ims, labels=None, targets=None, sz=(10,10), vmin=0, vmax=1, save_path=None, plot=True, title=None, fontsize=12, figscale=2):
+def gridPlot(ims, labels=None, targets=None, sz=(10,10), vmin=0, vmax=1, save_path=None, plot=True, title=None, fontsize=12, figscale=2, auto_range=False):
     
     fig, axs = plt.subplots(sz[0], sz[1], figsize=(figscale*sz[1], figscale*sz[0]))
     
     for n, (ax, im) in enumerate(zip(axs.ravel(), ims[:sz[0]*sz[1]])):
         
+        if auto_range:
+            vmin = im.min()
+            vmax = im.max()
         ax.imshow(im, vmin=vmin, vmax=vmax)
         ax.set_xticks([])
         ax.set_yticks([])
