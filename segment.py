@@ -16,7 +16,7 @@ def segment_image(tiff_path, model_path, diameter, gpu_index=-1):
     model = models.CellposeModel(gpu=(gpu_index != -1), pretrained_model=model_path, device=device)
     
     # Segment the image using cellpose
-    masks, _, _, _ = model.eval(img, diameter=diameter, channels=[0,0])
+    masks, _, _ = model.eval(img, diameter=diameter, channels=[0,0])
     
     return img, masks
 
