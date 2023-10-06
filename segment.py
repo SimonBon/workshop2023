@@ -1,16 +1,30 @@
 import numpy as np
 import tifffile
 from cellpose import models
+import torch
 
-def segment_image(tiff_path, model_path, diameter, gpu_index=-1):
+def segment_image(tiff_path, model_path, diameter, use_gpu=True, gpu_index=-1):
     # Load the .tif image using tifffile
     img = tifffile.imread(tiff_path)
     
     # Determine the device based on the gpu_index
-    if gpu_index == -1:
-        device = None  # Default to CPU
-    else:
-        device = f'cuda:{gpu_index}'
+    if use_gpu:
+        if gpu_index == -1:
+            device = None  
+            print("using CPU")
+        else:
+            if torch.cuda.is_available():
+                try:
+                    device = torch.device(f'cuda:{gpu_index}')
+                    print("using GPU")
+                except: 
+                    device = torch.device('cuda')
+                    print("using GPU")
+            else:
+                device = None
+                print("using CPU")
+            
+            
     
     # Load the cellpose model
     model = models.CellposeModel(gpu=(gpu_index != -1), pretrained_model=model_path, device=device)
