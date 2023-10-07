@@ -11,18 +11,18 @@ def segment_image(tiff_path, model_path, diameter, use_gpu=True, gpu_index=-1):
     if use_gpu:
         if gpu_index == -1:
             device = None  
-            print("using CPU")
+            print("Using CPU for computation!")
         else:
             if torch.cuda.is_available():
                 try:
                     device = torch.device(f'cuda:{gpu_index}')
-                    print("using GPU")
+                    print("Using GPU for computation!")
                 except: 
                     device = torch.device('cuda')
-                    print("using GPU")
+                    print("Using GPU for computation!")
             else:
                 device = None
-                print("using CPU")
+                print("Using CPU for computation!")
             
             
     
