@@ -67,4 +67,4 @@ def extract_and_pad_objects(mask, image, patch_sz, exclude_edges=True, use_surro
         background_patches.append(background_mask)
         coords.append((cx, cy))
         
-    return image_patches, cell_patches, surrounding_patches, background_patches, coords
+    return np.array(image_patches), np.array(cell_patches), np.array(surrounding_patches), np.array(background_patches), np.array(coords)
